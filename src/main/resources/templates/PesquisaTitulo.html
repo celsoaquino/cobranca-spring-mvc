@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de título</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous">
-
 </head>
-<body>
-
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Controle de Titulos</a>
-</nav>
-<div class="container">
+<section layout:fragment="conteudo">
     <div class="card mt-2">
-        <h5 class="card-header">Novo Titulo</h5>
+        <div class="card-header clearfix">
+            <h3 class="float-left">Pesquisa Titulo</h3>
+            <a class="btn btn-link float-right" href="/titulos/novo">Novo titulo</a>
+        </div>
 
         <div class="card-body">
             <div class="alert alert-success alert-dismissible fade show" role="alert"
@@ -51,18 +47,5 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-</body>
+</section>
 </html>

@@ -1,28 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de título</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
 </head>
-<body>
 
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Controle de Titulos</a>
-</nav>
-<div class="container">
+<section layout:fragment="conteudo">
 <div class="card mt-2">
-    <h5 class="card-header">Novo Titulo</h5>
+    <div class="card-header clearfix">
+        <h3 class="float-left">Novo Titulo</h3>
+        <a class="btn btn-link float-right" href="/titulos">Voltar para pesquisa</a>
+    </div>
 
     <div class="card-body">
         <form method="post" action="/titulos">
             <div class="alert alert-success alert-dismissible fade show" role="alert"
-                th:if="${!#strings.isEmpty(mensagem)}">
+                 th:if="${!#strings.isEmpty(mensagem)}">
                 <span th:text="${mensagem}"></span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -50,7 +44,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label  class="col-sm-2 control-label">Status</label>
+                <label class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
                     <select class="form-control form-control-sm" name="status">
                         <option th:each="status : ${allStatus}"
@@ -62,22 +56,12 @@
             </div>
             <div class="form-group">
                 <div class="offset-sm-2">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 </div>
-
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-</body>
+</section>
 </html>
