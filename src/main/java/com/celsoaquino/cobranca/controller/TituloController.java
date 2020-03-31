@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,12 +31,18 @@ public class TituloController {
     }
 
     @PostMapping
-    private ModelAndView salvar(Titulo titulo){
+    public ModelAndView salvar(Titulo titulo) {
         repoitory.save(titulo);
         ModelAndView mv = new ModelAndView("CadastroTitulo");
         mv.addObject("mensagem", "Titulo salvo com sucesso!");
         return mv;
     }
+
+    @GetMapping
+    public String pesquisar() {
+        return "PesquisaTitulo";
+    }
+
 
     @ModelAttribute("allStatus")
     public List<StatusTitulo> todosStatusTitulo(){
