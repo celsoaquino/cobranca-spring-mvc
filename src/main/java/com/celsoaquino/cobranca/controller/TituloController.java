@@ -4,11 +4,14 @@ import com.celsoaquino.cobranca.model.StatusTitulo;
 import com.celsoaquino.cobranca.model.Titulo;
 import com.celsoaquino.cobranca.repository.TituloRepoitory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,21 +29,26 @@ public class TituloController {
     @GetMapping("/novo")
     public ModelAndView novo() {
         ModelAndView mv = new ModelAndView("CadastroTitulo");
-        mv.addObject("todosStatusTitulo", StatusTitulo.values());
+        mv.addObject(new Titulo());
         return mv;
     }
 
     @PostMapping
-    public ModelAndView salvar(Titulo titulo) {
+    public String salvar(@Validated Titulo titulo, Errors errors, RedirectAttributes ra) {
+        if (errors.hasErrors()) {
+            return "CadastroTitulo";
+        }
         repoitory.save(titulo);
-        ModelAndView mv = new ModelAndView("CadastroTitulo");
-        mv.addObject("mensagem", "Titulo salvo com sucesso!");
-        return mv;
+        ra.addFlashAttribute("mensagem", "Titulo salvo com sucesso!");
+        return "redirect:/titulos/novo";
     }
 
     @GetMapping
-    public String pesquisar() {
-        return "PesquisaTitulo";
+    public ModelAndView pesquisar() {
+        List<Titulo> titulos = repoitory.findAll();
+        ModelAndView mv = new ModelAndView("PesquisaTitulo");
+        mv.addObject("titulos", titulos);
+        return mv;
     }
 
 

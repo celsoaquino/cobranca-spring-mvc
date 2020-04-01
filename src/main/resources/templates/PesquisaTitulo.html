@@ -27,20 +27,26 @@
                     <tr>
                         <th scope="col" >#</th>
                         <th scope="col">Descrição</th>
-                        <th scope="col">Data de vencimento</th>
-                        <th scope="col" >Valor</th>
-                        <th scope="col" >Status</th>
+                        <th scope="col" class="text-center">Data de vencimento</th>
+                        <th scope="col" class="text-right">Valor</th>
+                        <th scope="col" class="text-center">Status</th>
                         <th scope="col" ></th>
                     </tr>
                     </thead>
                     <tbody>
+                    <tr th:each="titulo : ${titulos}">
+                        <td th:text="${titulo.codigo}"></td>
+                        <td th:text="${titulo.descricao}"></td>
+                        <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+                        <td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+                        <td class="text-center" >
+                            <span class="badge" th:text="${titulo.status.descricao}"
+                            th:classappend="${#strings.toString(titulo.status) == 'PENDENTE' ?'badge-danger' : 'badge-success'}"></span>
+                        </td>
+                        <td></td>
+                    </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado</td>
                     </tr>
                     </tbody>
                 </table>
