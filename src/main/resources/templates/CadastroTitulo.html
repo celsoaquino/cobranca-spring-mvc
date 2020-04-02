@@ -15,6 +15,7 @@
 
     <div class="card-body">
         <form method="post" action="/titulos" th:object="${titulo}">
+            <input hidden th:field="*{codigo}">
             <div class="alert alert-success alert-dismissible fade show" role="alert"
                  th:if="${!#strings.isEmpty(mensagem)}">
                 <span th:text="${mensagem}"></span>

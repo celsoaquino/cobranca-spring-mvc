@@ -6,19 +6,19 @@ import com.celsoaquino.cobranca.repository.TituloRepoitory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/titulos")
 public class TituloController {
+
+    private static final String CADASTRO_VIEW = "CadastroTitulo";
 
     private final TituloRepoitory repoitory;
 
@@ -28,7 +28,7 @@ public class TituloController {
 
     @GetMapping("/novo")
     public ModelAndView novo() {
-        ModelAndView mv = new ModelAndView("CadastroTitulo");
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject(new Titulo());
         return mv;
     }
@@ -36,7 +36,7 @@ public class TituloController {
     @PostMapping
     public String salvar(@Validated Titulo titulo, Errors errors, RedirectAttributes ra) {
         if (errors.hasErrors()) {
-            return "CadastroTitulo";
+            return CADASTRO_VIEW;
         }
         repoitory.save(titulo);
         ra.addFlashAttribute("mensagem", "Titulo salvo com sucesso!");
@@ -48,6 +48,13 @@ public class TituloController {
         List<Titulo> titulos = repoitory.findAll();
         ModelAndView mv = new ModelAndView("PesquisaTitulo");
         mv.addObject("titulos", titulos);
+        return mv;
+    }
+
+    @GetMapping("{codigo}")
+    public ModelAndView edicao(@PathVariable("codigo") Titulo titulo) {
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+        mv.addObject(titulo);
         return mv;
     }
 
