@@ -3,6 +3,7 @@ package com.celsoaquino.cobranca.controller;
 import com.celsoaquino.cobranca.model.StatusTitulo;
 import com.celsoaquino.cobranca.model.Titulo;
 import com.celsoaquino.cobranca.repository.TituloRepoitory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -37,9 +38,15 @@ public class TituloController {
         if (errors.hasErrors()) {
             return CADASTRO_VIEW;
         }
-        repoitory.save(titulo);
-        ra.addFlashAttribute("mensagem", "Titulo salvo com sucesso!");
-        return "redirect:/titulos/novo";
+        try {
+            repoitory.save(titulo);
+            ra.addFlashAttribute("mensagem", "Titulo salvo com sucesso!");
+            return "redirect:/titulos/novo";
+        }catch (DataIntegrityViolationException e) {
+            errors.rejectValue("dataVencimento", null, "Formato de data inválido");
+            return CADASTRO_VIEW;
+        }
+
     }
 
     @GetMapping

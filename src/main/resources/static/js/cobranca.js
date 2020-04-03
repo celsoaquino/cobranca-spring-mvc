@@ -9,3 +9,9 @@
         modal.find('.modal-title').text( descricaoTitulo)
  });
 
+ $(function () {
+         $('[data-tog="tooltip"]').tooltip()
+ });
+
+
+
