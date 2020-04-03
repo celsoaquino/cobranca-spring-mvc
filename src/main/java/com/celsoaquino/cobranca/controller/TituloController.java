@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/titulos")
@@ -56,6 +55,13 @@ public class TituloController {
         ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject(titulo);
         return mv;
+    }
+
+    @GetMapping("/excluir/{codigo}")
+    public String excluir(@PathVariable("codigo") Long codigo, RedirectAttributes ra) {
+        repoitory.deleteById(codigo);
+        ra.addFlashAttribute("mensagem", "Titulo excluído com sucesso!");
+        return "redirect:/titulos";
     }
 
 
