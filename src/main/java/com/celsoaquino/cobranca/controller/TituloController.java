@@ -2,7 +2,9 @@ package com.celsoaquino.cobranca.controller;
 
 import com.celsoaquino.cobranca.model.StatusTitulo;
 import com.celsoaquino.cobranca.model.Titulo;
-import com.celsoaquino.cobranca.repository.TituloRepoitory;
+import com.celsoaquino.cobranca.repository.TituloRepository;
+import com.celsoaquino.cobranca.service.CadastroTituloService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -20,11 +22,14 @@ public class TituloController {
 
     private static final String CADASTRO_VIEW = "CadastroTitulo";
 
-    private final TituloRepoitory repoitory;
+    private final TituloRepository repoitory;
 
-    public TituloController(TituloRepoitory repoitory) {
+    public TituloController(TituloRepository repoitory) {
         this.repoitory = repoitory;
     }
+
+    @Autowired
+    private CadastroTituloService tituloService;
 
     @GetMapping("/novo")
     public ModelAndView novo() {
@@ -39,14 +44,13 @@ public class TituloController {
             return CADASTRO_VIEW;
         }
         try {
-            repoitory.save(titulo);
+            tituloService.salvar(titulo);
             ra.addFlashAttribute("mensagem", "Titulo salvo com sucesso!");
             return "redirect:/titulos/novo";
-        }catch (DataIntegrityViolationException e) {
-            errors.rejectValue("dataVencimento", null, "Formato de data inválido");
+        }catch (IllegalArgumentException e) {
+            errors.rejectValue("dataVencimento", null, e.getMessage());
             return CADASTRO_VIEW;
         }
-
     }
 
     @GetMapping
@@ -66,11 +70,10 @@ public class TituloController {
 
     @GetMapping("/excluir/{codigo}")
     public String excluir(@PathVariable("codigo") Long codigo, RedirectAttributes ra) {
-        repoitory.deleteById(codigo);
+        tituloService.excluir(codigo);
         ra.addFlashAttribute("mensagem", "Titulo excluído com sucesso!");
         return "redirect:/titulos";
     }
-
 
     @ModelAttribute("allStatus")
     public List<StatusTitulo> todosStatusTitulo(){
