@@ -1,5 +1,6 @@
 package com.celsoaquino.cobranca.service;
 
+import com.celsoaquino.cobranca.model.StatusTitulo;
 import com.celsoaquino.cobranca.model.Titulo;
 import com.celsoaquino.cobranca.repository.TituloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,13 @@ public class CadastroTituloService {
 
     public void excluir(Long codigo) {
         tituloRepository.deleteById(codigo);
+    }
+
+    public String receber(Long codigo) {
+        Titulo titulo = tituloRepository.findById(codigo).get();
+        titulo.setStatus(StatusTitulo.RECEBIDO);
+        tituloRepository.save(titulo);
+
+        return StatusTitulo.RECEBIDO.getDescricao();
     }
 }

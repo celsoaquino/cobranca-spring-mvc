@@ -47,7 +47,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-2">
-                    <select class="form-control form-control-sm" name="status">
+                    <select class="form-control form-control-sm" th:field="*{status}">
                         <option th:each="status : ${allStatus}"
                                 th:value="${status}"
                                 th:text="${status.getDescricao()}"></option>

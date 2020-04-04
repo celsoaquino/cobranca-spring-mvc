@@ -15,7 +15,7 @@
 
         <div class="card-body">
 <div layout:insert="~{mensagemGeral}"></div>
-            <div class="table-responsive-sm">
+
                 <table class="table table-bordered table-striped table-sm">
                     <thead>
                     <tr>
@@ -33,11 +33,11 @@
                         <td th:text="${titulo.descricao}"></td>
                         <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
                         <td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
-                        <td class="text-center" >
+                        <td class="text-center" th:attr="data-role=${titulo.codigo}">
                             <span class="badge" th:text="${titulo.status.descricao}"
                             th:classappend="${#strings.toString(titulo.status) == 'PENDENTE' ?'badge-danger' : 'badge-success'}"></span>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" style="height: 25px;width: 150px;">
                             <a class="btn btn-link" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}"
                                data-tog="tooltip" data-placement="top" title="Editar">
                                 <svg class="bi bi-pencil-square text-primary" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,15 @@
                                     <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
                                     <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
                                 </svg>
-                                    </button>
+                                </button>
+                            <a class="btn btn-link js-atualizar-status"  data-tog="tooltip" data-placement="top" title="Receber" th:if="${#strings.toString(titulo.status) == 'PENDENTE'}"
+                                    th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}"
+                                    th:attr="data-codigo=${titulo.codigo}">
+                                <svg class="bi bi-check-box text-success" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
 
                         </td>
                     </tr>
@@ -66,7 +74,7 @@
                 </table>
             </div>
         </div>
-    </div>
+
 
     <div layout:insert="~{DialogoConfirmacaoExclusao}"></div>
 </section>
