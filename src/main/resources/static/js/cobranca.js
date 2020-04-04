@@ -11,6 +11,7 @@
 
  $(function () {
          $('[data-tog="tooltip"]').tooltip()
+         $('.js-currency').maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: true});
  });
 
 
