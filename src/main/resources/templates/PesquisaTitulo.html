@@ -14,66 +14,98 @@
         </div>
 
         <div class="card-body">
-<div layout:insert="~{mensagemGeral}"></div>
+            <div layout:insert="~{mensagemGeral}"></div>
+            <form class="form-group" method="get" action="/titulos" th:object="${filter}">
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="text" class="form-control col-4" placeholder="Qual título você está procurando?" aria-label="Recipient's username" aria-describedby="button-addon2"
+                        autofocus="autofocus" th:field="*{descricao}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+            </form>
 
-                <table class="table table-bordered table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col" >#</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col" class="text-center">Data de vencimento</th>
-                        <th scope="col" class="text-right">Valor</th>
-                        <th scope="col" class="text-center">Status</th>
-                        <th scope="col" ></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="titulo : ${titulos}">
-                        <td th:text="${titulo.codigo}"></td>
-                        <td th:text="${titulo.descricao}"></td>
-                        <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
-                        <td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
-                        <td class="text-center" th:attr="data-role=${titulo.codigo}">
+            <div class="table-responsive">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col" class="text-center">Data de vencimento</th>
+                    <th scope="col" class="text-right">Valor</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="titulo : ${titulos}">
+                    <td th:text="${titulo.codigo}"></td>
+                    <td th:text="${titulo.descricao}"></td>
+                    <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+                    <td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+                    <td class="text-center" th:attr="data-role=${titulo.codigo}">
                             <span class="badge" th:text="${titulo.status.descricao}"
-                            th:classappend="${#strings.toString(titulo.status) == 'PENDENTE' ?'badge-danger' : 'badge-success'}"></span>
-                        </td>
-                        <td class="text-center" style="height: 25px;width: 150px;">
-                            <a class="btn btn-link" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}"
-                               data-tog="tooltip" data-placement="top" title="Editar">
-                                <svg class="bi bi-pencil-square text-primary" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
-                                </svg>
-                            </a>
-                                <button class="btn btn-link" data-toggle="modal" data-target="#delete-modals"
-                                        data-tog="tooltip" data-placement="top" title="Excluir"
-                                        th:attr="data-codigo=${titulo.codigo},
+                                  th:classappend="${#strings.toString(titulo.status) == 'PENDENTE' ?'badge-danger' : 'badge-success'}"></span>
+                    </td>
+                    <td class="text-center" style="height: 25px;width: 150px;">
+                        <a class="btn btn-link" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}"
+                           data-tog="tooltip" data-placement="top" title="Editar">
+                            <svg class="bi bi-pencil-square text-primary" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd"
+                                      d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </a>
+                        <button class="btn btn-link" data-toggle="modal" data-target="#delete-modals"
+                                data-tog="tooltip" data-placement="top" title="Excluir"
+                                th:attr="data-codigo=${titulo.codigo},
                                         data-descricao=${titulo.descricao} "
-                                        data-href=/titulos/excluir>
-                                <svg class="bi bi-x-square text-danger" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd"/>
-                                    <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
-                                    <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
-                                </svg>
-                                </button>
-                            <a class="btn btn-link js-atualizar-status"  data-tog="tooltip" data-placement="top" title="Receber" th:if="${#strings.toString(titulo.status) == 'PENDENTE'}"
-                                    th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}"
-                                    th:attr="data-codigo=${titulo.codigo}">
-                                <svg class="bi bi-check-box text-success" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
-                                    <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z" clip-rule="evenodd"/>
-                                </svg>
-                            </a>
+                                data-href=/titulos/excluir>
+                            <svg class="bi bi-x-square text-danger" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
+                                      clip-rule="evenodd"/>
+                                <path fill-rule="evenodd"
+                                      d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z"
+                                      clip-rule="evenodd"/>
+                                <path fill-rule="evenodd"
+                                      d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <a class="btn btn-link js-atualizar-status" data-tog="tooltip" data-placement="top"
+                           title="Receber" th:if="${#strings.toString(titulo.status) == 'PENDENTE'}"
+                           th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}"
+                           th:attr="data-codigo=${titulo.codigo}">
+                            <svg class="bi bi-check-box text-success" width="1em" height="1em" viewBox="0 0 16 16"
+                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z"
+                                      clip-rule="evenodd"/>
+                                <path fill-rule="evenodd"
+                                      d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </a>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado.</td>
-                    </tr>
-                    </tbody>
-                </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado.</td>
+                </tr>
+                </tbody>
+            </table>
             </div>
         </div>
+    </div>
 
 
     <div layout:insert="~{DialogoConfirmacaoExclusao}"></div>

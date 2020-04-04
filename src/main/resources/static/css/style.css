@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0;
+    }
+    .card-body {
+        padding: 0;
+    }
+}

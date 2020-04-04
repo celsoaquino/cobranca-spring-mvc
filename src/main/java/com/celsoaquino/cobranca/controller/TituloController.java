@@ -3,6 +3,7 @@ package com.celsoaquino.cobranca.controller;
 import com.celsoaquino.cobranca.model.StatusTitulo;
 import com.celsoaquino.cobranca.model.Titulo;
 import com.celsoaquino.cobranca.repository.TituloRepository;
+import com.celsoaquino.cobranca.repository.filter.TituloFilter;
 import com.celsoaquino.cobranca.service.CadastroTituloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,12 +22,6 @@ import java.util.List;
 public class TituloController {
 
     private static final String CADASTRO_VIEW = "CadastroTitulo";
-
-    private final TituloRepository repoitory;
-
-    public TituloController(TituloRepository repoitory) {
-        this.repoitory = repoitory;
-    }
 
     @Autowired
     private CadastroTituloService tituloService;
@@ -54,8 +49,9 @@ public class TituloController {
     }
 
     @GetMapping
-    public ModelAndView pesquisar() {
-        List<Titulo> titulos = repoitory.findAll();
+    public ModelAndView pesquisar(@ModelAttribute("filter") TituloFilter filter) {
+        List<Titulo> titulos = tituloService.filtar(filter);
+
         ModelAndView mv = new ModelAndView("PesquisaTitulo");
         mv.addObject("titulos", titulos);
         return mv;
